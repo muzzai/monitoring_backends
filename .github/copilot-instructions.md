@@ -24,6 +24,7 @@ kubectl apply -f apps/root/application.yaml
 | victoria-metrics-cluster | `VictoriaMetrics/helm-charts` | `charts/victoria-metrics-cluster` | `victoria-metrics-cluster-0.35.0` |
 | victoria-logs-cluster | `VictoriaMetrics/helm-charts` | `charts/victoria-logs-cluster` | `victoria-logs-cluster-0.0.27` |
 | grafana | `grafana-community/helm-charts` | `charts/grafana` | `grafana-11.2.3` |
+| local-path-provisioner | `rancher/local-path-provisioner` | `deploy/chart/local-path-provisioner` | `v0.0.34` |
 
 ArgoCD uses **multi-source** `$values` reference to pull `values.yaml` from this repo while sourcing the chart from the upstream Git repo.
 

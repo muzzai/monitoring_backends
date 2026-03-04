@@ -20,9 +20,12 @@ apps/
 ├── victoria-logs-cluster/         # Log storage (VictoriaLogs cluster)
 │   ├── application.yaml           # Chart pinned at victoria-logs-cluster-0.0.27
 │   └── values.yaml                # Overrides: retention, disk limits, resources
-└── grafana/                       # Dashboards & visualization
-    ├── application.yaml           # Chart pinned at grafana-11.2.3
-    └── values.yaml                # Overrides: datasources, plugins, persistence
+├── grafana/                       # Dashboards & visualization
+│   ├── application.yaml           # Chart pinned at grafana-11.2.3
+│   └── values.yaml                # Overrides: datasources, plugins, persistence
+└── local-path-provisioner/        # Dynamic PV provisioner for local storage
+    ├── application.yaml           # Chart pinned at v0.0.34
+    └── values.yaml                # StorageClass: local-path
 ```
 
 ## Design decisions

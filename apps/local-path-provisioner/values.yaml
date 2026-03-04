@@ -1,0 +1,7 @@
+# local-path-provisioner Helm values
+# Chart: https://github.com/rancher/local-path-provisioner/tree/v0.0.34/deploy/chart/local-path-provisioner
+
+storageClass:
+  name: local-path
+  reclaimPolicy: Delete
+  volumeBindingMode: WaitForFirstConsumer
