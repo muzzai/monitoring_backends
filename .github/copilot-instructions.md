@@ -23,6 +23,7 @@ kubectl apply -f apps/root/application.yaml
 |---|---|---|---|
 | victoria-metrics-cluster | `VictoriaMetrics/helm-charts` | `charts/victoria-metrics-cluster` | `victoria-metrics-cluster-0.35.0` |
 | victoria-logs-cluster | `VictoriaMetrics/helm-charts` | `charts/victoria-logs-cluster` | `victoria-logs-cluster-0.0.27` |
+| grafana | `grafana-community/helm-charts` | `charts/grafana` | `grafana-11.2.3` |
 
 ArgoCD uses **multi-source** `$values` reference to pull `values.yaml` from this repo while sourcing the chart from the upstream Git repo.
 
@@ -49,6 +50,12 @@ ArgoCD uses **multi-source** `$values` reference to pull `values.yaml` from this
 - **Replication**: no explicit `replicationFactor` in v0.0.27 — distribution handled automatically by vlinsert across vlstorage replicas
 - **Components**: vlselect (query), vlinsert (write), vlstorage (storage), vmauth (optional proxy), vector (optional log collector)
 
+### grafana
+
+- **Datasources**: pre-configured for VictoriaMetrics (Prometheus type) and VictoriaLogs (via `victoriametrics-logs-datasource` plugin)
+- **Plugins**: installed via `env.GF_INSTALL_PLUGINS`
+- **Persistence**: enabled on `local-path` StorageClass
+
 ## Build and Test
 
 No build step. Validate changes with:
@@ -57,6 +64,7 @@ No build step. Validate changes with:
 # Lint ArgoCD Application manifests
 kubectl apply --dry-run=client -f apps/victoria-metrics-cluster/application.yaml
 kubectl apply --dry-run=client -f apps/victoria-logs-cluster/application.yaml
+kubectl apply --dry-run=client -f apps/grafana/application.yaml
 
 # Validate YAML syntax
 yamllint apps/

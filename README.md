@@ -17,9 +17,12 @@ apps/
 ├── victoria-metrics-cluster/      # Time-series metrics (VictoriaMetrics cluster)
 │   ├── application.yaml           # Chart pinned at victoria-metrics-cluster-0.35.0
 │   └── values.yaml                # Overrides: retention, replication, resources
-└── victoria-logs-cluster/         # Log storage (VictoriaLogs cluster)
-    ├── application.yaml           # Chart pinned at victoria-logs-cluster-0.0.27
-    └── values.yaml                # Overrides: retention, disk limits, resources
+├── victoria-logs-cluster/         # Log storage (VictoriaLogs cluster)
+│   ├── application.yaml           # Chart pinned at victoria-logs-cluster-0.0.27
+│   └── values.yaml                # Overrides: retention, disk limits, resources
+└── grafana/                       # Dashboards & visualization
+    ├── application.yaml           # Chart pinned at grafana-11.2.3
+    └── values.yaml                # Overrides: datasources, plugins, persistence
 ```
 
 ## Design decisions
@@ -35,6 +38,7 @@ apps/
 ```bash
 kubectl apply --dry-run=client -f apps/victoria-metrics-cluster/application.yaml
 kubectl apply --dry-run=client -f apps/victoria-logs-cluster/application.yaml
+kubectl apply --dry-run=client -f apps/grafana/application.yaml
 yamllint apps/
 ```
 

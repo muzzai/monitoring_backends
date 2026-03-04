@@ -1,0 +1,34 @@
+# Grafana Helm values
+# Chart: https://github.com/grafana-community/helm-charts/tree/grafana-11.2.3/charts/grafana
+
+# --- Datasources ---
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: VictoriaMetrics
+        type: prometheus
+        url: http://victoria-metrics-cluster-vmselect.monitoring.svc:8481/select/0/prometheus/
+        access: proxy
+        isDefault: true
+        jsonData:
+          timeInterval: 30s
+
+      - name: VictoriaLogs
+        type: victoriametrics-logs-datasource
+        url: http://victoria-logs-cluster-vlselect.monitoring.svc:9471
+        access: proxy
+        jsonData:
+          maxLines: 1000
+
+# --- Persistence ---
+persistence:
+  enabled: true
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+
+# --- Plugins ---
+env:
+  GF_INSTALL_PLUGINS: "victoriametrics-logs-datasource"
