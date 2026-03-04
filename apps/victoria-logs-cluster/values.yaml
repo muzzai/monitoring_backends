@@ -12,7 +12,7 @@ vlstorage:
   persistentVolume:
     enabled: true
     size: 200Gi
-    # storageClassName: ""
+    storageClassName: local-path
 
   resources: {}
     # requests:
