@@ -32,3 +32,11 @@ persistence:
 # --- Plugins ---
 env:
   GF_INSTALL_PLUGINS: "victoriametrics-logs-datasource"
+
+# --- Admin credentials ---
+# Secret is managed by External Secrets Operator (ESO).
+# The ESO-created secret must have keys: admin-user, admin-password
+admin:
+  existingSecret: grafana
+  userKey: admin-user
+  passwordKey: admin-password
