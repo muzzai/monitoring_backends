@@ -1,0 +1,52 @@
+# victoria-logs-cluster Helm values
+# Chart: https://github.com/VictoriaMetrics/helm-charts/tree/victoria-logs-cluster-0.0.27/charts/victoria-logs-cluster
+
+# --- Retention ---
+vlstorage:
+  retentionPeriod: "3"  # Options: Nh, Nd, Nw, Ny; no unit = months
+  # retentionDiskSpaceUsage: ""   # e.g. "100GiB" — drop oldest data when exceeded
+  # retentionMaxDiskUsagePercent: ""  # e.g. "80" — percentage-based limit
+
+  replicaCount: 1
+
+  persistentVolume:
+    enabled: true
+    size: 200Gi
+    # storageClassName: ""
+
+  resources: {}
+    # requests:
+    #   cpu: 500m
+    #   memory: 512Mi
+    # limits:
+    #   cpu: "1"
+    #   memory: 1Gi
+
+  podDisruptionBudget:
+    enabled: false
+
+# --- Write path ---
+# victoria-logs-cluster v0.0.27 does not expose a replicationFactor setting.
+# Data distribution across vlstorage nodes is handled by vlinsert automatically.
+vlinsert:
+  replicaCount: 2
+  resources: {}
+
+  podDisruptionBudget:
+    enabled: false
+
+# --- Query path ---
+vlselect:
+  replicaCount: 1
+  resources: {}
+
+  podDisruptionBudget:
+    enabled: false
+
+# --- Auth proxy (optional) ---
+vmauth:
+  enabled: false
+
+# --- Log collector (optional) ---
+vector:
+  enabled: false

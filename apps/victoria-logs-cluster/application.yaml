@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: victoria-logs-cluster
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/VictoriaMetrics/helm-charts.git
+    targetRevision: victoria-logs-cluster-0.0.27
+    path: charts/victoria-logs-cluster
+    helm:
+      valueFiles:
+        # Path relative to the Helm chart root — adjust if using a multi-source setup
+        - $values/apps/victoria-logs-cluster/values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,54 @@
+# victoria-metrics-cluster Helm values
+# Chart: https://github.com/VictoriaMetrics/helm-charts/tree/victoria-metrics-cluster-0.35.0/charts/victoria-metrics-cluster
+
+# --- Retention ---
+vmstorage:
+  retentionPeriod: "3"  # 3 months (no unit = months). Options: Nh, Nd, Nw, Ny
+
+  replicaCount: 1
+
+  persistentVolume:
+    enabled: true
+    size: 200Gi
+    # storageClassName: ""
+
+  resources: {}
+    # requests:
+    #   cpu: 500m
+    #   memory: 512Mi
+    # limits:
+    #   cpu: "1"
+    #   memory: 1Gi
+
+  podDisruptionBudget:
+    enabled: false
+    # minAvailable: 1
+
+# --- Replication ---
+# Data replication is configured via vminsert extraArgs, not a dedicated key.
+# replicationFactor=2 writes each sample to 2 storage nodes for durability.
+# vmselect must deduplicate with dedup.minScrapeInterval matching scrape interval.
+vminsert:
+  replicaCount: 2
+  extraArgs: {}
+    # replicationFactor: "2"
+
+  resources: {}
+
+  podDisruptionBudget:
+    enabled: false
+
+vmselect:
+  replicaCount: 1
+  extraArgs: {}
+    # dedup.minScrapeInterval: "30s"  # enable when replicationFactor > 1
+
+  resources: {}
+
+  podDisruptionBudget:
+    enabled: false
+
+# --- Auth proxy (optional) ---
+vmauth:
+  enabled: false
+  replicaCount: 2
