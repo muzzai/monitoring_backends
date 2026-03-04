@@ -40,3 +40,12 @@ admin:
   existingSecret: grafana
   userKey: admin-user
   passwordKey: admin-password
+
+# --- Init container fix for local-path volumes ---
+initChownData:
+  enabled: false
+
+securityContext:
+  runAsUser: 472
+  runAsGroup: 472
+  fsGroup: 472
