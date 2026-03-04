@@ -7,7 +7,7 @@ vlstorage:
   # retentionDiskSpaceUsage: ""   # e.g. "100GiB" — drop oldest data when exceeded
   # retentionMaxDiskUsagePercent: ""  # e.g. "80" — percentage-based limit
 
-  replicaCount: 1
+  replicaCount: 2
 
   persistentVolume:
     enabled: true
@@ -37,7 +37,7 @@ vlinsert:
 
 # --- Query path ---
 vlselect:
-  replicaCount: 1
+  replicaCount: 2
   resources: {}
 
   podDisruptionBudget:
