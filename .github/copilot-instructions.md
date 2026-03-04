@@ -9,6 +9,14 @@ ArgoCD GitOps repo for the monitoring stack. Each application lives in `apps/<na
 | `application.yaml` | ArgoCD `Application` CR — points to an external Helm chart at a pinned tag |
 | `values.yaml` | Helm value overrides for the chart |
 
+### App of Apps
+
+`apps/root/application.yaml` is the **root Application** that discovers and deploys all child applications. It scans `apps/*/application.yaml` recursively. Deploy only the root app manually — all other apps are synced automatically:
+
+```bash
+kubectl apply -f apps/root/application.yaml
+```
+
 ### Managed applications
 
 | App | Chart repo | Chart path | Pinned revision |
