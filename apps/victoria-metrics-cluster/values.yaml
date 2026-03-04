@@ -8,15 +8,10 @@ vmstorage:
 
   persistentVolume:
     enabled: true
-    size: 100Gi
     storageClassName: local-path
 
   resources: {}
     # requests:
-    #   cpu: 500m
-    #   memory: 512Mi
-    # limits:
-    #   cpu: "1"
     #   memory: 1Gi
 
   podDisruptionBudget:
@@ -29,7 +24,7 @@ vmstorage:
 # vmselect must deduplicate with dedup.minScrapeInterval matching scrape interval.
 vminsert:
   replicaCount: 2
-  extraArgs: {}
+  extraArgs:
     replicationFactor: "2"
 
   resources: {}
@@ -39,7 +34,7 @@ vminsert:
 
 vmselect:
   replicaCount: 2
-  extraArgs: {}
+  extraArgs:
     dedup.minScrapeInterval: "30s"  # enable when replicationFactor > 1
 
   resources: {}
