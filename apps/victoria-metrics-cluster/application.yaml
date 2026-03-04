@@ -5,14 +5,16 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://github.com/VictoriaMetrics/helm-charts.git
-    targetRevision: victoria-metrics-cluster-0.35.0
-    path: charts/victoria-metrics-cluster
-    helm:
-      valueFiles:
-        # Path relative to the Helm chart root — adjust if using a multi-source setup
-        - $values/apps/victoria-metrics-cluster/values.yaml
+  sources:
+    - repoURL: https://github.com/VictoriaMetrics/helm-charts.git
+      targetRevision: victoria-metrics-cluster-0.35.0
+      path: charts/victoria-metrics-cluster
+      helm:
+        valueFiles:
+          - $values/apps/victoria-metrics-cluster/values.yaml
+    - repoURL: git@github.com:muzzai/monitoring_backends.git
+      targetRevision: HEAD
+      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
